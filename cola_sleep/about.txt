@@ -1,0 +1,1 @@
+Using counterfactual methods to predict possible improvement through different treatments, ex: CPAP, for sleep apnea patients available in the INSPECT medical database with EKG records. Counterfactual methods can help 'prescribe' treatments and predict outcomes in advance, using a counterfactual model and data for treated and untreated patients side-by-side.
