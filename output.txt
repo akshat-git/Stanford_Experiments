@@ -1,0 +1,486 @@
+[PCA] Epoch 1
+  ↪ Loss: 3.2650 | Trained on 1 prompts
+[PCA] Epoch 2
+  ↪ Loss: 3.0866 | Trained on 1 prompts
+[PCA] Epoch 3
+  ↪ Loss: 2.9694 | Trained on 1 prompts
+[PCA] Epoch 4
+  ↪ Loss: 2.6671 | Trained on 1 prompts
+[PCA] Epoch 5
+  ↪ Loss: 2.4503 | Trained on 3 prompts
+[PCA] Epoch 6
+  ↪ Loss: 2.2642 | Trained on 3 prompts
+[PCA] Epoch 7
+  ↪ Loss: 2.0011 | Trained on 3 prompts
+[PCA] Epoch 8
+  ↪ Loss: 1.7663 | Trained on 3 prompts
+[PCA] Epoch 9
+  ↪ Loss: 2.3258 | Trained on 5 prompts
+[PCA] Epoch 10
+  ↪ Loss: 2.1607 | Trained on 5 prompts
+[PCA] Epoch 11
+  ↪ Loss: 1.9196 | Trained on 5 prompts
+[PCA] Epoch 12
+  ↪ Loss: 1.7875 | Trained on 5 prompts
+[PCA] Epoch 13
+  ↪ Loss: 1.7901 | Trained on 5 prompts
+[PCA] Epoch 14
+  ↪ Loss: 1.5744 | Trained on 5 prompts
+[PCA] Epoch 15
+  ↪ Loss: 1.5100 | Trained on 5 prompts
+[PCA] Epoch 16
+  ↪ Loss: 1.4725 | Trained on 5 prompts
+[PCA] Epoch 17
+  ↪ Loss: 1.2847 | Trained on 5 prompts
+[PCA] Epoch 18
+  ↪ Loss: 1.1503 | Trained on 5 prompts
+[PCA] Epoch 19
+  ↪ Loss: 1.0579 | Trained on 5 prompts
+[PCA] Epoch 20
+  ↪ Loss: 1.0555 | Trained on 5 prompts
+[PCA] Epoch 21
+  ↪ Loss: 1.0396 | Trained on 4 prompts
+[PCA] Epoch 22
+  ↪ Loss: 0.8788 | Trained on 4 prompts
+[PCA] Epoch 23
+  ↪ Loss: 0.8430 | Trained on 4 prompts
+[PCA] Epoch 24
+  ↪ Loss: 0.8313 | Trained on 4 prompts
+[PCA] Epoch 25
+  ↪ Loss: 0.9281 | Trained on 2 prompts
+[PCA] Epoch 26
+  ↪ Loss: 0.8377 | Trained on 2 prompts
+[PCA] Epoch 27
+  ↪ Loss: 0.7671 | Trained on 2 prompts
+[PCA] Epoch 28
+  ↪ Loss: 0.6597 | Trained on 2 prompts
+[PCA] Epoch 29
+  ↪ Loss: 1.3564 | Trained on 4 prompts
+[PCA] Epoch 30
+  ↪ Loss: 1.2879 | Trained on 4 prompts
+[PCA] Epoch 31
+  ↪ Loss: 1.1551 | Trained on 4 prompts
+[PCA] Epoch 32
+  ↪ Loss: 1.0945 | Trained on 4 prompts
+[PCA] Epoch 33
+  ↪ Loss: 1.1105 | Trained on 5 prompts
+[PCA] Epoch 34
+  ↪ Loss: 0.8718 | Trained on 5 prompts
+[PCA] Epoch 35
+  ↪ Loss: 0.9641 | Trained on 5 prompts
+[PCA] Epoch 36
+  ↪ Loss: 0.7760 | Trained on 5 prompts
+[PCA] Epoch 37
+  ↪ Loss: 0.7498 | Trained on 5 prompts
+[PCA] Epoch 38
+  ↪ Loss: 0.7362 | Trained on 5 prompts
+[PCA] Epoch 39
+  ↪ Loss: 0.6057 | Trained on 5 prompts
+[PCA] Epoch 40
+  ↪ Loss: 0.6067 | Trained on 5 prompts
+[Random] Epoch 1
+  ↪ Loss: 2.4188 | Trained on 2 prompts
+[Random] Epoch 2
+  ↪ Loss: 2.5737 | Trained on 3 prompts
+[Random] Epoch 3
+  ↪ Loss: 2.4383 | Trained on 3 prompts
+[Random] Epoch 4
+  ↪ Loss: 2.4320 | Trained on 4 prompts
+[Random] Epoch 5
+  ↪ Loss: 2.3120 | Trained on 4 prompts
+[Random] Epoch 6
+  ↪ Loss: 2.2169 | Trained on 5 prompts
+[Random] Epoch 7
+  ↪ Loss: 2.2034 | Trained on 5 prompts
+[Random] Epoch 8
+  ↪ Loss: 2.1861 | Trained on 5 prompts
+[Random] Epoch 9
+  ↪ Loss: 1.8097 | Trained on 5 prompts
+[Random] Epoch 10
+  ↪ Loss: 1.9829 | Trained on 5 prompts
+[Random] Epoch 11
+  ↪ Loss: 1.7847 | Trained on 5 prompts
+[Random] Epoch 12
+  ↪ Loss: 1.4075 | Trained on 5 prompts
+[Random] Epoch 13
+  ↪ Loss: 1.3661 | Trained on 5 prompts
+[Random] Epoch 14
+  ↪ Loss: 1.1765 | Trained on 5 prompts
+[Random] Epoch 15
+  ↪ Loss: 1.2515 | Trained on 5 prompts
+[Random] Epoch 16
+  ↪ Loss: 1.3962 | Trained on 5 prompts
+[Random] Epoch 17
+  ↪ Loss: 1.5045 | Trained on 5 prompts
+[Random] Epoch 18
+  ↪ Loss: 1.2846 | Trained on 5 prompts
+[Random] Epoch 19
+  ↪ Loss: 1.0900 | Trained on 4 prompts
+[Random] Epoch 20
+  ↪ Loss: 0.9749 | Trained on 4 prompts
+[Random] Epoch 21
+  ↪ Loss: 1.0422 | Trained on 5 prompts
+[Random] Epoch 22
+  ↪ Loss: 0.9605 | Trained on 5 prompts
+[Random] Epoch 23
+  ↪ Loss: 0.8939 | Trained on 5 prompts
+[Random] Epoch 24
+  ↪ Loss: 0.8465 | Trained on 5 prompts
+[Random] Epoch 25
+  ↪ Loss: 0.9067 | Trained on 5 prompts
+[Random] Epoch 26
+  ↪ Loss: 0.7209 | Trained on 5 prompts
+[Random] Epoch 27
+  ↪ Loss: 0.6893 | Trained on 5 prompts
+[Random] Epoch 28
+  ↪ Loss: 0.7215 | Trained on 5 prompts
+[Random] Epoch 29
+  ↪ Loss: 0.7754 | Trained on 5 prompts
+[Random] Epoch 30
+  ↪ Loss: 0.6539 | Trained on 5 prompts
+[Random] Epoch 31
+  ↪ Loss: 0.6334 | Trained on 5 prompts
+[Random] Epoch 32
+  ↪ Loss: 0.5671 | Trained on 5 prompts
+[Random] Epoch 33
+  ↪ Loss: 0.6767 | Trained on 5 prompts
+[Random] Epoch 34
+  ↪ Loss: 0.5069 | Trained on 5 prompts
+[Random] Epoch 35
+  ↪ Loss: 0.8978 | Trained on 5 prompts
+[Random] Epoch 36
+  ↪ Loss: 0.7340 | Trained on 5 prompts
+[Random] Epoch 37
+  ↪ Loss: 0.6427 | Trained on 5 prompts
+[Random] Epoch 38
+  ↪ Loss: 0.5026 | Trained on 5 prompts
+[Random] Epoch 39
+  ↪ Loss: 0.6357 | Trained on 5 prompts
+[Random] Epoch 40
+  ↪ Loss: 0.5743 | Trained on 5 prompts
+
+
+
+[PCA] Epoch 1
+  ↪ Loss: 2.9213
+[PCA] Epoch 2
+  ↪ Loss: 2.6388
+[PCA] Epoch 3
+  ↪ Loss: 2.6848
+[PCA] Epoch 4
+  ↪ Loss: 2.5581
+[PCA] Epoch 5
+  ↪ Loss: 2.2073
+[PCA] Epoch 6
+  ↪ Loss: 2.0974
+[PCA] Epoch 7
+  ↪ Loss: 2.3374
+[PCA] Epoch 8
+  ↪ Loss: 2.1198
+[PCA] Epoch 9
+  ↪ Loss: 1.7870
+[PCA] Epoch 10
+  ↪ Loss: 1.6994
+[PCA] Epoch 11
+  ↪ Loss: 1.6891
+[PCA] Epoch 12
+  ↪ Loss: 2.0062
+[PCA] Epoch 13
+  ↪ Loss: 1.9266
+[PCA] Epoch 14
+  ↪ Loss: 1.6974
+[PCA] Epoch 15
+  ↪ Loss: 1.4799
+[PCA] Epoch 16
+  ↪ Loss: 1.3907
+[PCA] Epoch 17
+  ↪ Loss: 1.3108
+[PCA] Epoch 18
+  ↪ Loss: 1.1312
+[PCA] Epoch 19
+  ↪ Loss: 1.1258
+[PCA] Epoch 20
+  ↪ Loss: 1.1537
+[PCA] Epoch 21
+  ↪ Loss: 1.1282
+[PCA] Epoch 22
+  ↪ Loss: 1.0648
+[PCA] Epoch 23
+  ↪ Loss: 1.0536
+[PCA] Epoch 24
+  ↪ Loss: 0.9560
+[PCA] Epoch 25
+  ↪ Loss: 0.8376
+[PCA] Epoch 26
+  ↪ Loss: 0.8587
+[PCA] Epoch 27
+  ↪ Loss: 0.9813
+[PCA] Epoch 28
+  ↪ Loss: 0.8969
+[PCA] Epoch 29
+  ↪ Loss: 0.8430
+[PCA] Epoch 30
+  ↪ Loss: 0.8793
+[PCA] Epoch 31
+  ↪ Loss: 0.6510
+[PCA] Epoch 32
+  ↪ Loss: 0.6354
+[PCA] Epoch 33
+  ↪ Loss: 0.6712
+[PCA] Epoch 34
+  ↪ Loss: 0.6391
+[PCA] Epoch 35
+  ↪ Loss: 0.7171
+[PCA] Epoch 36
+  ↪ Loss: 0.7550
+[PCA] Epoch 37
+  ↪ Loss: 0.5519
+[PCA] Epoch 38
+  ↪ Loss: 0.4832
+[PCA] Epoch 39
+  ↪ Loss: 0.5499
+[PCA] Epoch 40
+  ↪ Loss: 0.4162
+[Random] Epoch 1
+  ↪ Loss: 2.6093
+[Random] Epoch 2
+  ↪ Loss: 2.1888
+[Random] Epoch 3
+  ↪ Loss: 2.0560
+[Random] Epoch 4
+  ↪ Loss: 1.9486
+[Random] Epoch 5
+  ↪ Loss: 1.7701
+[Random] Epoch 6
+  ↪ Loss: 1.8894
+[Random] Epoch 7
+  ↪ Loss: 1.7386
+[Random] Epoch 8
+  ↪ Loss: 1.5158
+[Random] Epoch 9
+  ↪ Loss: 1.3963
+[Random] Epoch 10
+  ↪ Loss: 1.5180
+[Random] Epoch 11
+  ↪ Loss: 1.3832
+[Random] Epoch 12
+  ↪ Loss: 1.4142
+[Random] Epoch 13
+  ↪ Loss: 1.2986
+[Random] Epoch 14
+  ↪ Loss: 1.2455
+[Random] Epoch 15
+  ↪ Loss: 1.6065
+[Random] Epoch 16
+  ↪ Loss: 1.5137
+[Random] Epoch 17
+  ↪ Loss: 1.3386
+[Random] Epoch 18
+  ↪ Loss: 1.4141
+[Random] Epoch 19
+  ↪ Loss: 1.2210
+[Random] Epoch 20
+  ↪ Loss: 1.1170
+[Random] Epoch 21
+  ↪ Loss: 0.9402
+[Random] Epoch 22
+  ↪ Loss: 0.8643
+[Random] Epoch 23
+  ↪ Loss: 0.8365
+[Random] Epoch 24
+  ↪ Loss: 0.8301
+[Random] Epoch 25
+  ↪ Loss: 0.7244
+[Random] Epoch 26
+  ↪ Loss: 0.8257
+[Random] Epoch 27
+  ↪ Loss: 0.7965
+[Random] Epoch 28
+  ↪ Loss: 0.8110
+[Random] Epoch 29
+  ↪ Loss: 0.7886
+[Random] Epoch 30
+  ↪ Loss: 0.7688
+[Random] Epoch 31
+  ↪ Loss: 0.5778
+[Random] Epoch 32
+  ↪ Loss: 0.6764
+[Random] Epoch 33
+  ↪ Loss: 0.5234
+[Random] Epoch 34
+  ↪ Loss: 0.5025
+[Random] Epoch 35
+  ↪ Loss: 0.4347
+[Random] Epoch 36
+  ↪ Loss: 0.5695
+[Random] Epoch 37
+  ↪ Loss: 0.4222
+[Random] Epoch 38
+  ↪ Loss: 0.5995
+[Random] Epoch 39
+  ↪ Loss: 0.6020
+[Random] Epoch 40
+  ↪ Loss: 0.5105
+
+
+
+[TopEig] Epoch 1
+  ↪ Loss: 2.5573
+[TopEig] Epoch 2
+  ↪ Loss: 2.3361
+[TopEig] Epoch 3
+  ↪ Loss: 2.2778
+[TopEig] Epoch 4
+  ↪ Loss: 2.1269
+[TopEig] Epoch 5
+  ↪ Loss: 2.2365
+[TopEig] Epoch 6
+  ↪ Loss: 2.0359
+[TopEig] Epoch 7
+  ↪ Loss: 2.0270
+[TopEig] Epoch 8
+  ↪ Loss: 1.8106
+[TopEig] Epoch 9
+  ↪ Loss: 1.6600
+[TopEig] Epoch 10
+  ↪ Loss: 1.5206
+[TopEig] Epoch 11
+  ↪ Loss: 1.4272
+[TopEig] Epoch 12
+  ↪ Loss: 1.4505
+[TopEig] Epoch 13
+  ↪ Loss: 1.4997
+[TopEig] Epoch 14
+  ↪ Loss: 1.4246
+[TopEig] Epoch 15
+  ↪ Loss: 1.4844
+[TopEig] Epoch 16
+  ↪ Loss: 1.0822
+[TopEig] Epoch 17
+  ↪ Loss: 1.1573
+[TopEig] Epoch 18
+  ↪ Loss: 1.0944
+[TopEig] Epoch 19
+  ↪ Loss: 0.9649
+[TopEig] Epoch 20
+  ↪ Loss: 1.1529
+[TopEig] Epoch 21
+  ↪ Loss: 1.2784
+[TopEig] Epoch 22
+  ↪ Loss: 1.1750
+[TopEig] Epoch 23
+  ↪ Loss: 0.9146
+[TopEig] Epoch 24
+  ↪ Loss: 0.9984
+[TopEig] Epoch 25
+  ↪ Loss: 0.8861
+[TopEig] Epoch 26
+  ↪ Loss: 0.8143
+[TopEig] Epoch 27
+  ↪ Loss: 0.7021
+[TopEig] Epoch 28
+  ↪ Loss: 0.7673
+[TopEig] Epoch 29
+  ↪ Loss: 0.6134
+[TopEig] Epoch 30
+  ↪ Loss: 0.6298
+[TopEig] Epoch 31
+  ↪ Loss: 0.5608
+[TopEig] Epoch 32
+  ↪ Loss: 0.4798
+[TopEig] Epoch 33
+  ↪ Loss: 0.4800
+[TopEig] Epoch 34
+  ↪ Loss: 0.4406
+[TopEig] Epoch 35
+  ↪ Loss: 0.4201
+[TopEig] Epoch 36
+  ↪ Loss: 0.4184
+[TopEig] Epoch 37
+  ↪ Loss: 0.4281
+[TopEig] Epoch 38
+  ↪ Loss: 0.3769
+[TopEig] Epoch 39
+  ↪ Loss: 0.3168
+[TopEig] Epoch 40
+  ↪ Loss: 0.2606
+[Random] Epoch 1
+  ↪ Loss: 3.1118
+[Random] Epoch 2
+  ↪ Loss: 2.7278
+[Random] Epoch 3
+  ↪ Loss: 2.4457
+[Random] Epoch 4
+  ↪ Loss: 2.2980
+[Random] Epoch 5
+  ↪ Loss: 2.0989
+[Random] Epoch 6
+  ↪ Loss: 2.2586
+[Random] Epoch 7
+  ↪ Loss: 1.7714
+[Random] Epoch 8
+  ↪ Loss: 1.8030
+[Random] Epoch 9
+  ↪ Loss: 1.5095
+[Random] Epoch 10
+  ↪ Loss: 1.7327
+[Random] Epoch 11
+  ↪ Loss: 2.1011
+[Random] Epoch 12
+  ↪ Loss: 1.9077
+[Random] Epoch 13
+  ↪ Loss: 1.5961
+[Random] Epoch 14
+  ↪ Loss: 1.4963
+[Random] Epoch 15
+  ↪ Loss: 1.3966
+[Random] Epoch 16
+  ↪ Loss: 1.2783
+[Random] Epoch 17
+  ↪ Loss: 1.4000
+[Random] Epoch 18
+  ↪ Loss: 1.3412
+[Random] Epoch 19
+  ↪ Loss: 1.2523
+[Random] Epoch 20
+  ↪ Loss: 1.1084
+[Random] Epoch 21
+  ↪ Loss: 1.0318
+[Random] Epoch 22
+  ↪ Loss: 1.0948
+[Random] Epoch 23
+  ↪ Loss: 0.9760
+[Random] Epoch 24
+  ↪ Loss: 0.8779
+[Random] Epoch 25
+  ↪ Loss: 0.7715
+[Random] Epoch 26
+  ↪ Loss: 0.7833
+[Random] Epoch 27
+  ↪ Loss: 0.8207
+[Random] Epoch 28
+  ↪ Loss: 0.6874
+[Random] Epoch 29
+  ↪ Loss: 0.7680
+[Random] Epoch 30
+  ↪ Loss: 0.7186
+[Random] Epoch 31
+  ↪ Loss: 0.7946
+[Random] Epoch 32
+  ↪ Loss: 0.6840
+[Random] Epoch 33
+  ↪ Loss: 0.7485
+[Random] Epoch 34
+  ↪ Loss: 0.8288
+[Random] Epoch 35
+  ↪ Loss: 0.5732
+[Random] Epoch 36
+  ↪ Loss: 0.4855
+[Random] Epoch 37
+  ↪ Loss: 0.4917
+[Random] Epoch 38
+  ↪ Loss: 0.4599
+[Random] Epoch 39
+  ↪ Loss: 0.4540
+[Random] Epoch 40
+  ↪ Loss: 0.5714
