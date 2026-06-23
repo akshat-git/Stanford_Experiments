@@ -1,0 +1,27 @@
+"""The GRPO step: turn a group's rewards into RELATIVE advantages.
+
+This is the heart of Group Relative Policy Optimization. Instead of an absolute
+reward, each output is judged against the average of its own group:
+
+    advantage = (reward - group_mean) / group_std
+
+Above-average outputs get a positive advantage (reinforce); below-average get a
+negative one (suppress). The group itself is the baseline, so no separate
+value/critic network is needed. Works on any objects with a `.reward` attribute
+and a settable `.advantage`.
+"""
+
+import statistics
+
+
+def compute_group_advantages(scored, eps=1e-6):
+    """Set each output's advantage = (reward - group_mean) / group_std (in place).
+
+    Returns (mean, std) for reporting.
+    """
+    rewards = [s.reward for s in scored]
+    mean = statistics.mean(rewards)
+    std = statistics.pstdev(rewards)  # population std over the group
+    for s in scored:
+        s.advantage = (s.reward - mean) / (std + eps)
+    return mean, std
