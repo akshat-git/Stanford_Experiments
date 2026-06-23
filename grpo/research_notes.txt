@@ -1,0 +1,12 @@
+GRPO - Group Relative Policy Optimization
+- Starts by forcing model to think, 
+    - output its reasoning within <think>...</think> tags
+    - output answers within <answer>...</answer> tags
+    - make M separate outputs with thought processes, penalize skipping/misuse of tags, optimize step
+- Simple accuracy checker on answer tags
+    - N of M outputs accurate, find group average accuracy score
+    - penalize relative inaccuracy and reinforce relative accuracy
+- Penalizes less complex or misguided thought processes along with inaccuracy
+- Reinforces complex thought with accurate solutions
+- Result is model with 'thought' processes, eliminates less viable logic patterns for problems
+
