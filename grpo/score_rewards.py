@@ -20,6 +20,11 @@ class RewardWeights:
     thought_target_words: int = 12  # reasoning counts as "rich" near this length
 
 
+def max_reward(weights):
+    """Largest reward a single output can earn (each component caps at 1.0)."""
+    return weights.format + weights.accuracy + weights.thought
+
+
 @dataclass
 class ScoredOutput:
     """One group member: its text, reward breakdown, and group-relative advantage."""

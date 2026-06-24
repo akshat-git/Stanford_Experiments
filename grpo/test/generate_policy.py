@@ -55,10 +55,10 @@ class MockPolicy:
 
     def _render(self, kind, correct_answer):
         wrong_answer = correct_answer + self._rng.choice([-2, -1, 1, 2])
-        if kind == "good":   # rich reasoning + correct answer + proper tags
+        if kind == "good":   # rich multi-step reasoning + correct answer + proper tags
             return (
-                "<think>Break the problem into parts, compute the operation step "
-                "by step, then double-check the arithmetic before answering."
+                "<think>Handle each operation in order, respecting precedence, "
+                "then double-check the running total before answering."
                 f"</think><answer>{correct_answer}</answer>"
             )
         if kind == "lazy":   # correct, but almost no reasoning

@@ -26,52 +26,80 @@ loose in grpo/.
 """
 
 import copy
+import os
+from contextlib import nullcontext
+
+# Reduce CUDA memory fragmentation. Memory-only: does not change results. Must be
+# set before torch initializes CUDA, and setdefault leaves any user value intact.
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
 import torch
+import torch.nn.functional as F
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 _SYSTEM = (
-    "You solve arithmetic problems. Put your step-by-step reasoning inside "
-    "<think></think>, then give ONLY the final integer inside <answer></answer>."
+    "You solve arithmetic expressions. Use each number and operator exactly as given "
+    "-- never invent an operation. Compute left to right, except do any multiplication "
+    "before addition and subtraction; if there is no multiplication, just go left to "
+    "right. Put your reasoning inside <think></think>, then give ONLY the final integer "
+    "inside <answer></answer>."
 )
-# One-shot example (in chat form) so the model reliably emits the tag format.
-_EXAMPLE_USER = "What is 2 + 3?"
-_EXAMPLE_ASSISTANT = "<think>2 plus 3 is 5.</think><answer>5</answer>"
+# Two few-shot examples: one pure add/subtract (left to right) and one with
+# multiplication (precedence). Both are needed so the model doesn't over-apply
+# "multiply first" and hallucinate a multiplication on add/subtract-only chains.
+_EXAMPLES = [
+    ("What is 8 + 2 - 5?",
+     "<think>No multiplication, so left to right: 8 + 2 = 10, then 10 - 5 = 5.</think><answer>5</answer>"),
+    ("What is 4 + 2 * 3?",
+     "<think>Multiply first: 2 * 3 = 6, then 4 + 6 = 10.</think><answer>10</answer>"),
+]
 
 
 class RealPolicy:
     def __init__(self, model_name="Qwen/Qwen2.5-0.5B-Instruct", device=None,
-                 learning_rate=5e-6, kl_coef=0.1,
-                 max_new_tokens=64, temperature=1.0, top_k=50):
+                 learning_rate=3e-6, kl_coef=0.2,
+                 max_new_tokens=48, temperature=1.0, top_k=50, micro_batch=4):
         self.device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"Loading real model '{model_name}' on {self.device}")
 
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
+        # Mixed precision when CUDA supports bf16: compute runs in bf16 (faster on
+        # tensor cores, ~half the activation memory) while the trained weights stay
+        # fp32 so small-LR Adam updates don't underflow.
+        self.use_amp = (self.device.type == "cuda" and torch.cuda.is_bf16_supported())
+        self.amp_dtype = torch.bfloat16
+
         self.model = AutoModelForCausalLM.from_pretrained(model_name).to(self.device)
 
         # Frozen reference = the initial policy; the KL leash pulls back toward it.
-        self.reference = copy.deepcopy(self.model).to(self.device)
+        # It is inference-only, so we keep it in bf16 to save ~half its memory.
+        ref_dtype = self.amp_dtype if self.use_amp else torch.float32
+        self.reference = copy.deepcopy(self.model).to(device=self.device, dtype=ref_dtype)
         self.reference.eval()
         for p in self.reference.parameters():
             p.requires_grad_(False)
+
+        # The KV cache is unused in the training forward; turning it off saves memory.
+        self.model.config.use_cache = False
+        self.reference.config.use_cache = False
 
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=learning_rate)
         self.kl_coef = kl_coef
         self.max_new_tokens = max_new_tokens
         self.temperature = temperature
         self.top_k = top_k
+        self.micro_batch = micro_batch  # cap GPU peak: process this many sequences at a time
         self._cache = None  # (sequences, attention_mask, prompt_len) from last generate()
 
     def _build_prompt(self, task_prompt):
-        # Format as a chat with a one-shot example; ask for an assistant turn.
-        messages = [
-            {"role": "system", "content": _SYSTEM},
-            {"role": "user", "content": _EXAMPLE_USER},
-            {"role": "assistant", "content": _EXAMPLE_ASSISTANT},
-            {"role": "user", "content": task_prompt},
-        ]
+        # Format as a chat with the few-shot examples; ask for an assistant turn.
+        messages = [{"role": "system", "content": _SYSTEM}]
+        for example_user, example_assistant in _EXAMPLES:
+            messages.append({"role": "user", "content": example_user})
+            messages.append({"role": "assistant", "content": example_assistant})
+        messages.append({"role": "user", "content": task_prompt})
         return self.tokenizer.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
         )
@@ -86,31 +114,50 @@ class RealPolicy:
         self.model.eval()
         enc = self.tokenizer(self._build_prompt(prompt), return_tensors="pt").to(self.device)
         prompt_len = enc["input_ids"].shape[1]
+        pad_id = self.tokenizer.pad_token_id
 
-        with torch.no_grad():
-            sequences = self.model.generate(
-                **enc,
-                do_sample=True,
-                num_return_sequences=num_samples,
-                max_new_tokens=self.max_new_tokens,
-                temperature=self.temperature,
-                top_k=self.top_k,
-                pad_token_id=self.tokenizer.pad_token_id,
-            )  # [num_samples, L] including the prompt
+        # Sample in micro-batches so the generation KV cache never holds all M at once.
+        chunks, remaining = [], num_samples
+        with torch.no_grad(), self._autocast():
+            while remaining > 0:
+                n = min(self.micro_batch, remaining)
+                chunks.append(self.model.generate(
+                    **enc,
+                    do_sample=True,
+                    num_return_sequences=n,
+                    max_new_tokens=self.max_new_tokens,
+                    temperature=self.temperature,
+                    top_k=self.top_k,
+                    pad_token_id=pad_id,
+                    use_cache=True,  # keep decoding fast (config.use_cache is off for training)
+                ))
+                remaining -= n
 
-        attention_mask = (sequences != self.tokenizer.pad_token_id).long()
+        # Pad each chunk to a common length, then stack into [num_samples, L].
+        max_len = max(c.size(1) for c in chunks)
+        sequences = torch.cat([F.pad(c, (0, max_len - c.size(1)), value=pad_id) for c in chunks], dim=0)
+        attention_mask = (sequences != pad_id).long()
         self._cache = (sequences, attention_mask, prompt_len)
 
         # Decode only the completion part (after the prompt) for scoring.
         return [self.tokenizer.decode(seq[prompt_len:], skip_special_tokens=True)
                 for seq in sequences]
 
+    def _autocast(self):
+        """bf16 autocast context when supported, else a no-op."""
+        return torch.autocast(self.device.type, dtype=self.amp_dtype) if self.use_amp else nullcontext()
+
     def _token_logp(self, model, sequences, attention_mask):
-        """Log-prob each model assigns to the actually-sampled next token. [M, L-1]"""
-        logits = model(input_ids=sequences, attention_mask=attention_mask).logits
-        logp = torch.log_softmax(logits[:, :-1, :], dim=-1)
+        """Log-prob each model assigns to the actually-sampled next token. [M, L-1].
+
+        Uses logsumexp + gather instead of a full log_softmax, so the [M, L, vocab]
+        probability tensor is never materialized (a large memory saving with a
+        150k-token vocab); mathematically identical to log_softmax then gather.
+        """
+        logits = model(input_ids=sequences, attention_mask=attention_mask).logits[:, :-1, :]
         targets = sequences[:, 1:]
-        return logp.gather(-1, targets.unsqueeze(-1)).squeeze(-1)
+        chosen = logits.gather(-1, targets.unsqueeze(-1)).squeeze(-1)
+        return chosen - torch.logsumexp(logits, dim=-1)
 
     def train_step(self, advantages):
         """One regularized GRPO update from the last group's advantages.
@@ -121,27 +168,39 @@ class RealPolicy:
           back toward the frozen reference so it cannot drift into incoherence.
         """
         sequences, attention_mask, prompt_len = self._cache
-        advantages = torch.tensor(advantages, dtype=torch.float, device=self.device)
+        adv = torch.tensor(advantages, dtype=torch.float, device=self.device)
+        group = sequences.size(0)
 
         self.model.train()
-        policy_logp = self._token_logp(self.model, sequences, attention_mask)        # grad
-        with torch.no_grad():
-            ref_logp = self._token_logp(self.reference, sequences, attention_mask)
-
-        # Average over completion tokens only (skip prompt + padding).
-        positions = torch.arange(sequences.size(1) - 1, device=self.device)
-        mask = ((positions >= prompt_len - 1).unsqueeze(0) & (attention_mask[:, 1:] == 1)).float()
-        tokens = mask.sum(dim=1).clamp(min=1.0)                                       # [M]
-
-        mean_logp = (policy_logp * mask).sum(dim=1) / tokens                          # [M]
-
-        # k3 KL estimator (Schulman): exp(r) - r - 1 with r = ref_logp - policy_logp.
-        log_ratio = ref_logp - policy_logp
-        kl_per_token = torch.exp(log_ratio) - log_ratio - 1.0
-        mean_kl = (kl_per_token * mask).sum(dim=1) / tokens                           # [M]
-
-        loss = -(advantages * mean_logp).mean() + self.kl_coef * mean_kl.mean()
         self.optimizer.zero_grad()
-        loss.backward()
+        total_loss = 0.0
+        # Process the group in micro-batches and accumulate gradients. Dividing each
+        # chunk's summed loss by the full group size makes the accumulated gradient
+        # identical to a single full-batch step -- only the peak memory is lower.
+        for start in range(0, group, self.micro_batch):
+            sl = slice(start, start + self.micro_batch)
+            seq, mask_ids, adv_c = sequences[sl], attention_mask[sl], adv[sl]
+
+            with self._autocast():
+                policy_logp = self._token_logp(self.model, seq, mask_ids)            # grad
+            policy_logp = policy_logp.float()  # do the loss math in fp32 for stability
+            with torch.no_grad():
+                ref_logp = self._token_logp(self.reference, seq, mask_ids).float()
+
+            # Average over completion tokens only (skip prompt + padding).
+            positions = torch.arange(seq.size(1) - 1, device=self.device)
+            mask = ((positions >= prompt_len - 1).unsqueeze(0) & (mask_ids[:, 1:] == 1)).float()
+            tokens = mask.sum(dim=1).clamp(min=1.0)
+            mean_logp = (policy_logp * mask).sum(dim=1) / tokens
+
+            # k3 KL estimator (Schulman): exp(r) - r - 1 with r = ref_logp - policy_logp.
+            log_ratio = ref_logp - policy_logp
+            kl_per_token = torch.exp(log_ratio) - log_ratio - 1.0
+            mean_kl = (kl_per_token * mask).sum(dim=1) / tokens
+
+            loss = (-(adv_c * mean_logp) + self.kl_coef * mean_kl).sum() / group
+            loss.backward()
+            total_loss += loss.item()
+
         self.optimizer.step()
-        return loss.item()
+        return total_loss

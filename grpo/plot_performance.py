@@ -11,12 +11,17 @@ Three panels, because the policy-gradient "loss" alone is a poor progress signal
                   the small KL floor. Its sign/magnitude are NOT progress signals.
     * reward   -- mean group reward. THIS is the progress signal; it rises as the
                   policy learns, and it does not collapse at convergence.
-    * accuracy -- fraction of the group that is correct.
+    * accuracy -- percentage of the group that is correct.
 """
 
 
-def plot_performance(losses, rewards, accuracies, out_path, title="GRPO performance"):
-    """Save a three-panel figure (loss, mean reward, accuracy) vs pass."""
+def plot_performance(losses, rewards, accuracies, out_path, title="GRPO performance",
+                     max_reward=None):
+    """Save a three-panel figure (loss, mean reward, accuracy) vs pass.
+
+    `max_reward` (if given) is drawn as a ceiling line on the reward panel so the
+    actual reward points can be read against the best the reward system allows.
+    """
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -30,15 +35,23 @@ def plot_performance(losses, rewards, accuracies, out_path, title="GRPO performa
     ax_loss.axhline(0, color="gray", linewidth=0.8, linestyle="--")
     ax_loss.grid(True, alpha=0.3)
 
-    ax_reward.plot(passes, rewards, marker="o", color="tab:green")
-    ax_reward.set_title("Mean group reward\n(the progress signal -- should rise)")
+    # Actual mean reward per pass (line + points), against the max the reward allows.
+    ax_reward.plot(passes, rewards, marker="o", color="tab:green", label="mean reward")
+    if max_reward is not None:
+        ax_reward.axhline(max_reward, color="tab:gray", linestyle="--",
+                          label=f"max possible = {max_reward:g}")
+        ax_reward.set_ylim(0, max_reward * 1.12)
+    ax_reward.set_title("Mean group reward\n(the progress signal -- should rise toward the max)")
     ax_reward.set_xlabel("pass"); ax_reward.set_ylabel("reward")
+    ax_reward.legend(loc="lower right")
     ax_reward.grid(True, alpha=0.3)
 
-    ax_acc.plot(passes, accuracies, marker="o", color="tab:blue")
-    ax_acc.set_title("Group accuracy")
-    ax_acc.set_xlabel("pass"); ax_acc.set_ylabel("fraction correct")
-    ax_acc.set_ylim(-0.02, 1.02)
+    # Accuracy as a percentage.
+    acc_pct = [a * 100 for a in accuracies]
+    ax_acc.plot(passes, acc_pct, marker="o", color="tab:blue")
+    ax_acc.set_title("Group accuracy per pass")
+    ax_acc.set_xlabel("pass"); ax_acc.set_ylabel("accuracy (%)")
+    ax_acc.set_ylim(-2, 105)
     ax_acc.grid(True, alpha=0.3)
 
     fig.suptitle(title, fontsize=14)

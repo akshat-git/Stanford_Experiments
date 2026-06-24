@@ -1,0 +1,615 @@
+
+===== pass 1/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.55  think: No parentheses or numbers are multiplied: 7 + 5 - 3 = 9.
+    + #1 answer=9      adv=+0.55  think: Start with 7 + 5 = 12, then subtract 3 from 12: 12 - 3 = 9.
+    + #2 answer=9      adv=+0.55  think: No multiplication, so left to right: 7 + 5 = 12, then 12 - 3 = 9.
+    + #3 answer=9      adv=-0.77  think: (no <think> tag)
+    + #4 answer=9      adv=+0.55  think: First perform addition from left to right: 7 + 5 = 12, then subtract 3...
+    + #5 answer=9      adv=+0.55  think: First add up all numbers: 7 + 5 = 12, then subtract 3 from that result...
+    + #6 answer=9      adv=+0.55  think: Multiply first: 5 - 3 = 2, then add last two numbers: 7 + 2 = 9.
+    - #7 answer=22     adv=-2.09  think: Multiply first: 5 * 3 = 15, then 7 + 15 = 22.
+    + #8 answer=9      adv=+0.55  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from that result: 12 - ...
+    + #9 answer=9      adv=+0.55  think: No multiplication or parentheses, so left to right: 7 + 5 = 12, then 1...
+    + #10 answer=9      adv=+0.55  think: No multiplication or division, go left to right: 7 + 5 = 12, then 12 -...
+    - #11 answer=22     adv=-2.09  think: Multiply next: 5 * 3 = 15, then 7 + 15 = 22.
+  What is 2 + 3 * 4?  (target 14)
+    - #0 answer=None   adv=-3.09  think: (no <think> tag)
+    + #1 answer=14     adv=+0.40  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.40  think: This order of operations should be followed here, not in parentheses: ...
+    + #3 answer=14     adv=+0.40  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.40  think: First, multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.40  think: Multiply first: 3 * 4 = 12, then 2 + 12 = 14.
+    + #6 answer=14     adv=+0.40  think: First, perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #7 answer=14     adv=+0.40  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #8 answer=14     adv=-0.91  think: (no <think> tag)
+    + #9 answer=14     adv=+0.40  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.40  think: First multiply: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.40  think: Multiply first: 3 * 4 = 12, then 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.45  think: Multiply first: 6 * 3 = 18, then 18 - 5 = 13.
+    + #1 answer=13     adv=+0.45  think: Multiply first: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.45  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.45  think: Multiply first: 6 * 3 = 18, then 18 - 5 = 13.
+    + #4 answer=13     adv=+0.45  think: First perform the multiplication: 6 * 3 = 18, then subtract 5: 18 - 5 ...
+    + #5 answer=13     adv=+0.45  think: First, multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.45  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    - #7 answer=None   adv=-2.24  think: The order of operations states that we should perform multiplications ...
+    + #8 answer=13     adv=+0.45  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    - #9 answer=None   adv=-2.24  think: The order of operations does not apply here since multiplication and d...
+    + #10 answer=13     adv=+0.45  think: Prioritize multiplication: 6 * 3 = 18, then 18 - 5 = 13.
+    + #11 answer=13     adv=+0.40  think: 6 * 3 = 18, then 18 - 5 = 13.
+
+===== pass 2/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.30  think: No multiplication or division so we go from left to right: 7 + 5 = 12,...
+    + #1 answer=9      adv=+0.30  think: No multiplication, so left to right: 7 + 5 = 12, then 12 - 3 = 9.
+    + #2 answer=9      adv=+0.30  think: No multiplication or parentheses allowed, so evaluate from left to rig...
+    + #3 answer=9      adv=+0.30  think: First, add 7 and 5: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #4 answer=9      adv=+0.30  think: Start with the largest operations from left to right: 7 + 5 = 12, then...
+    + #5 answer=9      adv=+0.30  think: Start with the plus signs: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    - #6 answer=None   adv=-3.32  think: (no <think> tag)
+    + #7 answer=9      adv=+0.30  think: First, add up 7 + 5 = 12, then subtract 3 from 12 to get 9.
+    + #8 answer=9      adv=+0.30  think: First subtract 3 from 7: 7 - 3 = 4, then add 5: 4 + 5 = 9.
+    + #9 answer=9      adv=+0.30  think: First perform addition: 7 + 5 = 12, then subtraction: 12 - 3 = 9.
+    + #10 answer=9      adv=+0.30  think: First, perform multiplication: 5 - 3 = 2, then add 7 to get 9.
+    + #11 answer=9      adv=+0.30  think: No multiplication or division, so left to right: 7 + 5 = 12, then 12 -...
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.30  think: No multiplication, just add: 2 + 3 * 4 = 2 + 12 = 14.
+    + #1 answer=14     adv=+0.30  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    - #2 answer=None   adv=-3.32  think: (no <think> tag)
+    + #3 answer=14     adv=+0.30  think: First multiply: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.30  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.30  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.30  think: No multiplication, so first 3 * 4 = 12, then 2 + 12 = 14.
+    + #7 answer=14     adv=+0.30  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #8 answer=14     adv=+0.30  think: No multiplication, so use left to right: 2 + (3 * 4) = 2 + 12 = 14.
+    + #9 answer=14     adv=+0.30  think: Do multiplication first: 3 * 4 = 12, then add it to 2: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.30  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.30  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.30  think: Multiply first: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    - #5 answer=12     adv=-3.32  think: No multiplication, use order of operations: 6 * 3 - 5 = 17 - 5 = 12.
+    + #6 answer=13     adv=+0.30  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #8 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #9 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+
+===== pass 3/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.45  think: No multiplication or subtraction, just perform operations from left to...
+    + #1 answer=9      adv=+0.45  think: First add 7 and 5: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #2 answer=9      adv=+0.45  think: No parentheses or numbers outside the parentheses, so left to right: 7...
+    + #3 answer=9      adv=+0.45  think: First perform addition: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #4 answer=9      adv=+0.45  think: Left to right: 7 + 5 = 12, then 12 - 3 = 9.
+    + #5 answer=9      adv=+0.45  think: First subtract: 7 - 3 = 4, then add: 4 + 5 = 9.
+    + #6 answer=9      adv=+0.45  think: Start with 7, then add 5: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #7 answer=9      adv=+0.45  think: Start from the left: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    - #8 answer=5      adv=-2.24  think: First subtract, then add: 7 - 5 = 2, then 2 + 3 = 5.
+    + #9 answer=9      adv=+0.45  think: No parentheses, so add from left to right: 7 + 5 = 12, then 12 - 3 = 9...
+    - #10 answer=5      adv=-2.24  think: First subtract, then add: 7 - 5 = 2, then 2 + 3 = 5.
+    + #11 answer=9      adv=+0.45  think: First subtract: 5 - 3 = 2, then add that result to 7: 7 + 2 = 9.
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.66  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #1 answer=14     adv=+0.66  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.66  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.66  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.66  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.66  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.66  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    - #7 answer=36     adv=-1.47  think: (no <think> tag)
+    + #8 answer=14     adv=+0.66  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    - #9 answer=None   adv=-1.77  think: (no <think> tag)
+    - #10 answer=None   adv=-1.77  think: (no <think> tag)
+    + #11 answer=14     adv=-0.25  think: (no <think> tag)
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #5 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #8 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #9 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+
+===== pass 4/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.30  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from that result: 12 - ...
+    - #1 answer=None   adv=-3.32  think: Start from the leftmost parenthesis (first expression): 7 + 5 = 12, th...
+    + #2 answer=9      adv=+0.30  think: First add the numbers from left to right: 7 + 5 = 12, then subtract 3:...
+    + #3 answer=9      adv=+0.30  think: First perform multiplication: 5 - 3 = 2, then add that result to 7: 7 ...
+    + #4 answer=9      adv=+0.30  think: Left to right: 7 + 5 = 12, then 12 - 3 = 9.
+    + #5 answer=9      adv=+0.30  think: Left to right: 7 + 5 = 12, then 12 - 3 = 9.
+    + #6 answer=9      adv=+0.30  think: First add the numbers from left to right: 7 + 5 = 12, then subtract 3:...
+    + #7 answer=9      adv=+0.30  think: First add the numbers: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #8 answer=9      adv=+0.30  think: Start with 7 + 5 = 12, then subtract 3 from 12: 12 - 3 = 9.
+    + #9 answer=9      adv=+0.30  think: Start with 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #10 answer=9      adv=+0.30  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #11 answer=9      adv=+0.30  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #1 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #7 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #8 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #9 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #5 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #8 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #9 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+
+===== pass 5/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.00  think: Left to right: 7 + 5 = 12, then 12 - 3 = 9.
+    + #1 answer=9      adv=+0.00  think: First add numbers from left to right: 7 + 5 = 12, then subtract 3 from...
+    + #2 answer=9      adv=+0.00  think: Left to right: 7 + 5 = 12, then 12 - 3 = 9.
+    + #3 answer=9      adv=+0.00  think: First add from left to right: 7 + 5 = 12, then subtract from right to ...
+    + #4 answer=9      adv=+0.00  think: Start with 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #5 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from that total: 12 - 3...
+    + #6 answer=9      adv=+0.00  think: Start with 7, add 5: 7 + 5 = 12, subtract 3 from that: 12 - 3 = 9.
+    + #7 answer=9      adv=+0.00  think: Start with 7 + 5 = 12, then subtract 3 from that result: 12 - 3 = 9.
+    + #8 answer=9      adv=+0.00  think: Left to right: 7 + 5 = 12, then 12 - 3 = 9.
+    + #9 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #10 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from that sum: 12 - 3 =...
+    + #11 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #1 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #7 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #8 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #9 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.00  think: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #5 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #8 answer=13     adv=+0.00  think: 6 * 3 = 18, then subtract 5 from 18 = 13.
+    + #9 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+
+===== pass 6/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #1 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #2 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #3 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #4 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #5 answer=9      adv=+0.00  think: Left to right: 7 + 5 = 12, then 12 - 3 = 9.
+    + #6 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #7 answer=9      adv=+0.00  think: Start with: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #8 answer=9      adv=+0.00  think: First add from left to right: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #9 answer=9      adv=+0.00  think: Start with 7: add 5 to get 12, then subtract 3 for 9.
+    + #10 answer=9      adv=+0.00  think: First add numbers from left to right: 7 + 5 = 12, then subtract: 12 - ...
+    + #11 answer=9      adv=+0.00  think: First add the numbers from left to right: 7 + 5 = 12, then subtract 3 ...
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #1 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #7 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #8 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #9 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.58  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.58  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.58  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.58  think: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.58  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #5 answer=13     adv=-1.73  think: 6 * 3 = 18, then 18 - 5 = 13.
+    + #6 answer=13     adv=-1.73  think: 6 * 3 = 18, subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.58  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #8 answer=13     adv=+0.58  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #9 answer=13     adv=+0.58  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.58  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=-1.73  think: 6 * 3 = 18, subtract: 18 - 5 = 13.
+
+===== pass 7/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #1 answer=9      adv=+0.00  think: First add 7 + 5 = 12, then subtract 3 = 9.
+    + #2 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #3 answer=9      adv=+0.00  think: Left to right: 7 + 5 = 12, then 12 - 3 = 9.
+    + #4 answer=9      adv=+0.00  think: First multiply: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #5 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #6 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #7 answer=9      adv=+0.00  think: First add left to right: 7 + 5 = 12, then subtract right to left: 12 -...
+    + #8 answer=9      adv=+0.00  think: First add numbers from left to right: 7 + 5 = 12, then subtract 3 from...
+    + #9 answer=9      adv=+0.00  think: First add from left to right: 7 + 5 = 12, then subtract from left to r...
+    + #10 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #11 answer=9      adv=+0.00  think: First multiply: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #1 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #7 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #8 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #9 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #5 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #8 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #9 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+
+===== pass 8/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #1 answer=9      adv=+0.00  think: First add numbers from left: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #2 answer=9      adv=+0.00  think: First add numbers from left to right: 7 + 5 = 12, then subtract 3: 12 ...
+    + #3 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from that sum: 12 - 3 =...
+    + #4 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from that result: 12 - ...
+    + #5 answer=9      adv=+0.00  think: First add 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #6 answer=9      adv=+0.00  think: First add the numbers from left to right: 7 + 5 = 12, then subtract th...
+    + #7 answer=9      adv=+0.00  think: First add from left to right: 7 + 5 = 12, then subtract from left to r...
+    + #8 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #9 answer=9      adv=+0.00  think: First add numbers from left to right: 7 + 5 = 12, then subtract 3: 12 ...
+    + #10 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #11 answer=9      adv=+0.00  think: First multiply: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #1 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #7 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #8 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #9 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #5 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #8 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #9 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+
+===== pass 9/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #1 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #2 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from that result: 12 - ...
+    + #3 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from that result: 12 - ...
+    + #4 answer=9      adv=+0.00  think: First add the numbers from left to right: 7 + 5 = 12, then subtract th...
+    + #5 answer=9      adv=+0.00  think: First multiply: 5 - 3 = 2, then add: 7 + 2 = 9.
+    + #6 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from 12: 12 - 3 = 9.
+    + #7 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from the result: 12 - 3...
+    + #8 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #9 answer=9      adv=+0.00  think: First perform addition: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #10 answer=9      adv=+0.00  think: First multiply: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #11 answer=9      adv=+0.00  think: First add the numbers from left to right: 7 + 5 = 12, then subtract th...
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #1 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add from left to right: 2 + 12 = 14.
+    + #7 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #8 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #9 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #5 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #8 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #9 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+
+===== pass 10/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #1 answer=9      adv=+0.00  think: First multiply: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #2 answer=9      adv=+0.00  think: First add the numbers from left to right: 7 + 5 = 12, then subtract 3 ...
+    + #3 answer=9      adv=+0.00  think: First multiply: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #4 answer=9      adv=+0.00  think: First perform multiplication: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #5 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #6 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from the sum: 12 - 3 = ...
+    + #7 answer=9      adv=+0.00  think: First perform multiplication: 7 + 5 = 12, then add remaining numbers: ...
+    + #8 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #9 answer=9      adv=+0.00  think: First multiply: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #10 answer=9      adv=+0.00  think: First multiply: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #11 answer=9      adv=+0.00  think: First multiply: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #1 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add from left to right: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #7 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #8 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #9 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #5 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #8 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #9 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+
+===== pass 11/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.00  think: First perform multiplication: 5 - 3 = 2, then add from left to right: ...
+    + #1 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from that result: 12 - ...
+    + #2 answer=9      adv=+0.00  think: First perform multiplication: 7 + 5 = 12, then add: 12 - 3 = 9.
+    + #3 answer=9      adv=+0.00  think: First perform multiplication: 7 + 5 = 12, then add 3 from the end: 12 ...
+    + #4 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from that result: 12 - ...
+    + #5 answer=9      adv=+0.00  think: First multiply 7 + 5 = 12, then subtract 3 from that result: 12 - 3 = ...
+    + #6 answer=9      adv=+0.00  think: First multiply: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #7 answer=9      adv=+0.00  think: First perform addition: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #8 answer=9      adv=+0.00  think: First perform multiplication: 5 - 3 = 2, then add other numbers: 7 + 2...
+    + #9 answer=9      adv=+0.00  think: First multiply: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #10 answer=9      adv=+0.00  think: First multiply 7 and 5: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #11 answer=9      adv=+0.00  think: First perform multiplication: 7 + 5 = 12, then subtract 3 from 12: 12 ...
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add the result to 2: 2 ...
+    + #1 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #7 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #8 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #9 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract 5 from 18: 18 ...
+    + #4 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #5 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #8 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #9 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18. Then subtract 5 from 18: 18 ...
+
+===== pass 12/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.44  think: First multiply: 5 - 3 = 2, then add from left to right: 7 + 2 = 9.
+    + #1 answer=9      adv=+0.44  think: No multiplication, so left to right: 7 + 5 = 12, then 12 - 3 = 9.
+    + #2 answer=9      adv=+0.44  think: No multiplication or division, so left to right: 7 + 5 = 12, then 12 -...
+    + #3 answer=9      adv=+0.44  think: No multiplication, so left to right: 7 + 5 = 12, then 12 - 3 = 9.
+    + #4 answer=9      adv=+0.44  think: First add the numbers from left to right: 7 + 5 = 12. Then subtract 3:...
+    + #5 answer=9      adv=+0.44  think: First, add 7 and 5: 7 + 5 = 12, then subtract 3 from that sum: 12 - 3 ...
+    - #6 answer=None   adv=-2.59  think: First, perform the addition from left to right: 7 + 5 = 12. Then, subt...
+    - #7 answer=15     adv=-1.83  think: First, perform multiplication: 5 + 3 = 8. Then, add the remaining numb...
+    + #8 answer=9      adv=+0.44  think: No multiplication or parentheses, so left to right: 7 + 5 = 12, then 1...
+    + #9 answer=9      adv=+0.44  think: First, add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #10 answer=9      adv=+0.44  think: First multiply: 5 - 3 = 2, then add: 7 + 2 = 9.
+    + #11 answer=9      adv=+0.44  think: First, add 7 and 5: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.71  think: First perform multiplication: 3 * 4 = 12, then add the result to 2: 2 ...
+    + #1 answer=14     adv=+0.71  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.71  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.71  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.71  think: First, multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.71  think: First, perform multiplication: 3 * 4 = 12, then add that result to 2: ...
+    - #6 answer=20     adv=-1.41  think: No multiplication, so left to right: 2 + 3 = 5, then 5 * 4 = 20.
+    + #7 answer=14     adv=+0.71  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    - #8 answer=20     adv=-1.41  think: No multiplication, so left to right: 2 + 3 = 5, then 5 * 4 = 20.
+    + #9 answer=14     adv=+0.71  think: No multiplication, so left to right: 2 + 3 * 4 = 2 + 12 = 14.
+    - #10 answer=20     adv=-1.41  think: No multiplication, so left to right: 2 + 3 = 5, then 5 * 4 = 20.
+    - #11 answer=20     adv=-1.41  think: No multiplication, so left to right: 2 + 3 = 5, then 5 * 4 = 20.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.30  think: First, perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.30  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.30  think: First perform multiplication: 6 * 3 = 18, then subtract 5: 18 - 5 = 13...
+    + #5 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.30  think: First, multiply 6 by 3: 6 * 3 = 18, then subtract 5: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.30  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    - #8 answer=None   adv=-3.32  think: First, multiply 6 by 3: 6 * 3 = 18, then subtract 5 from that result: ...
+    + #9 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.30  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.30  think: First perform multiplication: 6 * 3 = 18, then subtract 5: 18 - 5 = 13...
+
+===== pass 13/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.30  think: First add 7 and 5: 7 + 5 = 12, then subtract 3 from the sum: 12 - 3 = ...
+    + #1 answer=9      adv=+0.30  think: First multiply: 5 - 3 = 2, then add: 7 + 2 = 9.
+    + #2 answer=9      adv=+0.30  think: No multiplication or division operations, so go left to right: 7 + 5 =...
+    + #3 answer=9      adv=+0.30  think: First perform addition: 7 + 5 = 12, then subtract 3 from 12: 12 - 3 = ...
+    + #4 answer=9      adv=+0.30  think: First add 7 + 5 = 12, then subtract 3 from 12, resulting in 9.
+    - #5 answer=None   adv=-3.32  think: First multiply 5 by 3: 5 * 3 = 15, then add 7 and 15: 7 + 15 = 22.
+    + #6 answer=9      adv=+0.30  think: First add from left to right: 7 + 5 = 12, then subtract from right to ...
+    + #7 answer=9      adv=+0.30  think: First multiply: 5 - 3 = 2, then add: 7 + 2 = 9.
+    + #8 answer=9      adv=+0.30  think: First multiply: 5 - 3 = 2, then add: 7 + 2 = 9.
+    + #9 answer=9      adv=+0.30  think: First perform addition: 7 + 5 = 12, then perform subtraction: 12 - 3 =...
+    + #10 answer=9      adv=+0.30  think: First perform multiplication: 5 - 3 = 2, then add: 7 + 2 = 9.
+    + #11 answer=9      adv=+0.30  think: First perform multiplication: 5 - 3 = 2, then add: 7 + 2 = 9.
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #1 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #7 answer=14     adv=+0.00  think: First, multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #8 answer=14     adv=+0.00  think: First, perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #9 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #5 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.00  think: First, multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #8 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #9 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+
+===== pass 14/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #1 answer=9      adv=+0.00  think: First perform multiplication: 5 - 3 = 2, then add: 7 + 2 = 9.
+    + #2 answer=9      adv=+0.00  think: First, add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #3 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #4 answer=9      adv=+0.00  think: First perform multiplication: 5 - 3 = 2, then add: 7 + 2 = 9.
+    + #5 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #6 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+    + #7 answer=9      adv=+0.00  think: First perform the addition: 7 + 5 = 12, then perform the subtraction: ...
+    + #8 answer=9      adv=+0.00  think: First perform multiplication: 5 - 3 = 2, then add: 7 + 2 = 9.
+    + #9 answer=9      adv=+0.00  think: First: 7 + 5 = 12, then: 12 - 3 = 9.
+    + #10 answer=9      adv=+0.00  think: First: 7 + 5 = 12, then: 12 - 3 = 9.
+    + #11 answer=9      adv=+0.00  think: First add 7 and 5: 7 + 5 = 12, then subtract 3: 12 - 3 = 9.
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #1 answer=14     adv=+0.00  think: First, multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.00  think: First, multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add 2: 2 + 12 = 14.
+    + #7 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #8 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #9 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.00  think: First: multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #5 answer=13     adv=+0.00  think: First, multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtraction: 18 - 5 = 1...
+    + #8 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #9 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.00  think: First, multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.00  think: First, multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+
+===== pass 15/15 =====
+  What is 7 + 5 - 3?  (target 9)
+    + #0 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #1 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #2 answer=9      adv=+0.00  think: First do the multiplication: 5 - 3 = 2, then add: 7 + 2 = 9.
+    + #3 answer=9      adv=+0.00  think: First, add from left to right: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #4 answer=9      adv=+0.00  think: First add numbers from left to right: 7 + 5 = 12, then subtract: 12 - ...
+    + #5 answer=9      adv=+0.00  think: First, add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #6 answer=9      adv=+0.00  think: First perform multiplication: 5 - 3 = 2, then add: 7 + 2 = 9.
+    + #7 answer=9      adv=+0.00  think: First, perform multiplication: 5 - 3 = 2, then add: 7 + 2 = 9.
+    + #8 answer=9      adv=+0.00  think: First add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #9 answer=9      adv=+0.00  think: First, add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #10 answer=9      adv=+0.00  think: First perform addition: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+    + #11 answer=9      adv=+0.00  think: First: add: 7 + 5 = 12, then subtract: 12 - 3 = 9.
+  What is 2 + 3 * 4?  (target 14)
+    + #0 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #1 answer=14     adv=+0.00  think: First, multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #2 answer=14     adv=+0.00  think: First: multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #3 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #4 answer=14     adv=+0.00  think: First: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #5 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #6 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #7 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #8 answer=14     adv=+0.00  think: First multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #9 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #10 answer=14     adv=+0.00  think: First, multiply: 3 * 4 = 12, then add: 2 + 12 = 14.
+    + #11 answer=14     adv=+0.00  think: First perform multiplication: 3 * 4 = 12, then add: 2 + 12 = 14.
+  What is 6 * 3 - 5?  (target 13)
+    + #0 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #1 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #2 answer=13     adv=+0.00  think: First, multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #3 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #4 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #5 answer=13     adv=+0.00  think: First, multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #6 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #7 answer=13     adv=+0.00  think: First, multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #8 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #9 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #10 answer=13     adv=+0.00  think: First perform multiplication: 6 * 3 = 18, then subtract: 18 - 5 = 13.
+    + #11 answer=13     adv=+0.00  think: First multiply: 6 * 3 = 18, then subtract: 18 - 5 = 13.
