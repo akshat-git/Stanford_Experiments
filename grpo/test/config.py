@@ -7,11 +7,17 @@ demo.py reads them (nothing else needs editing).
 # --- Tasks ---------------------------------------------------------------- #
 # Numerical expressions to train on. Multi-step is fine (chained + - *, standard
 # precedence), e.g. "2 + 3 * 4". One Task is built per expression.
-EQUATIONS = ["7 + 5 - 3", "2 + 3 * 4", "6 * 3 - 5"]
+# A hard gradient: precedence + long chain, two parenthesised groups, and nested parentheses.
+EQUATIONS = [
+    "12 + 3 * 4 - 5",            # = 19
+    "2 * (3 + 4) - 6",          # = 8
+    "(8 - 3) * (2 + 1) + 4",    # = 19
+    "3 * (4 + 2 * (5 - 1))",    # = 36  (nested parentheses)
+]
 
 # --- Training loop -------------------------------------------------------- #
-PASSES = 30          # double the real folder's passes (this demo is instant)
-GROUP_SIZE = 12      # completions sampled per task per pass
+PASSES = 100          # double the real folder's passes (this demo is instant)
+GROUP_SIZE = 50      # completions sampled per task per pass
 
 # --- Policy hyperparameters (categorical archetype policy) ---------------- #
 SEED = 42

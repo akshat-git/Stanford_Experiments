@@ -24,7 +24,7 @@ ARCHETYPES = ["good", "lazy", "wrong", "malformed"]
 class Policy(Protocol):
     """Interface a real model implements: sample completions, then learn from advantages."""
 
-    def generate(self, prompt: str, num_samples: int, correct_answer: int) -> List[str]: ...
+    def generate(self, prompt: str, num_samples: int, correct_answer: int, steps: int) -> List[str]: ...
     def train_step(self, advantages: List[float]) -> float: ...
 
 
@@ -53,15 +53,12 @@ class MockPolicy:
         total = sum(exps)
         return [e / total for e in exps]
 
-    def _render(self, kind, correct_answer):
+    def _render(self, kind, correct_answer, steps):
         wrong_answer = correct_answer + self._rng.choice([-2, -1, 1, 2])
-        if kind == "good":   # rich multi-step reasoning + correct answer + proper tags
-            return (
-                "<think>Handle each operation in order, respecting precedence, "
-                "then double-check the running total before answering."
-                f"</think><answer>{correct_answer}</answer>"
-            )
-        if kind == "lazy":   # correct, but almost no reasoning
+        if kind == "good":   # shows one "=" calculation per operation -> full thought credit
+            work = "; ".join(f"step {i + 1} = partial" for i in range(steps))
+            return f"<think>{work}; total = {correct_answer}</think><answer>{correct_answer}</answer>"
+        if kind == "lazy":   # correct, but almost no reasoning (no calculation steps)
             return f"<think>obviously.</think><answer>{correct_answer}</answer>"
         if kind == "wrong":  # reasoning present but the answer is incorrect
             return (
@@ -70,13 +67,17 @@ class MockPolicy:
             )
         return f"the answer is probably {wrong_answer}"  # malformed: no tags
 
-    def generate(self, prompt, num_samples, correct_answer=0):
-        """Sample `num_samples` outputs from the current archetype distribution."""
+    def generate(self, prompt, num_samples, correct_answer=0, steps=1):
+        """Sample `num_samples` outputs from the current archetype distribution.
+
+        `steps` (the task's operation count) scales how much working the "good"
+        archetype shows, mirroring the per-task explanation requirement.
+        """
         probs = self._softmax()
         idxs = [self._rng.choices(range(len(ARCHETYPES)), weights=probs)[0]
                 for _ in range(num_samples)]
         self._last = (idxs, probs)
-        return [self._render(ARCHETYPES[i], correct_answer) for i in idxs]
+        return [self._render(ARCHETYPES[i], correct_answer, steps) for i in idxs]
 
     def train_step(self, advantages):
         """One regularized policy-gradient update on the archetype logits; returns loss.

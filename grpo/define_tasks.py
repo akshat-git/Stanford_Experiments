@@ -5,17 +5,17 @@ answer string is correct. Because correctness lives on the task, you can plug in
 ANY specific verifiable task type (arithmetic, "is it prime?", string puzzles)
 without touching the GRPO machinery.
 
-`equation_task("2 + 3 * 4")` parses a user-supplied numerical expression into a
-Task. Expressions may chain several operators, so they take a couple of reasoning
-steps (and follow standard operator precedence), not just one.
+`equation_task("2 * (3 + 4)")` parses a user-supplied numerical expression into a
+Task. Expressions may chain several operators and use parentheses, so they take a
+varying number of reasoning steps (and follow standard operator precedence).
 """
 
 import re
 from dataclasses import dataclass
 from typing import Callable
 
-# A chain of integers joined by + - * (>= 1 operator), e.g. "7 + 5 - 3".
-_EXPRESSION_RE = re.compile(r"^\s*-?\d+(\s*[+\-*]\s*-?\d+)+\s*$")
+# Allowed characters: integers, spaces, the operators + - *, and parentheses.
+_ALLOWED_RE = re.compile(r"^[0-9+\-*()\s]+$")
 
 
 @dataclass
@@ -24,6 +24,7 @@ class Task:
     check: Callable[[str], bool]      # answer_text -> is it correct?
     label: str = ""                   # short description for printouts
     answer: int = 0                   # the expected answer (metadata for demos)
+    steps: int = 1                    # operations required -> how many "=" a full solution shows
 
 
 def arithmetic_task(a, b, op="+"):
@@ -38,20 +39,27 @@ def arithmetic_task(a, b, op="+"):
             return False
 
     return Task(prompt=f"What is {a} {op} {b}?", check=check,
-                label=f"{a} {op} {b} = {expected}", answer=expected)
+                label=f"{a} {op} {b} = {expected}", answer=expected, steps=1)
 
 
 def equation_task(expr):
     """Parse a numerical expression into a (possibly multi-step) Task.
 
-    Examples: "7 + 5" (one step) or "2 + 3 * 4" (a couple of steps, standard
-    precedence). Only integers and the operators + - * are accepted.
+    Supports chained `+ - *` and parentheses with standard precedence, e.g.
+    "2 + 3 * 4", "8 - 2 + 5 - 1", or "2 * (3 + 4)". Only integers and `+ - * ( )`
+    are accepted.
     """
-    if not _EXPRESSION_RE.match(expr):
-        raise ValueError(f"Could not parse expression {expr!r}; use integers joined by + - *.")
+    text = expr.strip()
+    if not text or not _ALLOWED_RE.match(text) or "**" in text.replace(" ", ""):
+        raise ValueError(f"Could not parse expression {expr!r}; use integers, + - *, and ().")
 
-    # Safe: the regex guarantees `expr` is only integers, spaces, and + - *.
-    expected = eval(expr.strip(), {"__builtins__": {}}, {})
+    # Safe: only integers, spaces, + - *, and parentheses can reach eval.
+    try:
+        expected = eval(text, {"__builtins__": {}}, {})
+    except SyntaxError:
+        raise ValueError(f"Invalid expression {expr!r}.")
+    if not isinstance(expected, int):
+        raise ValueError(f"Expression {expr!r} must evaluate to an integer.")
 
     def check(answer_text):
         try:
@@ -59,5 +67,7 @@ def equation_task(expr):
         except (ValueError, AttributeError):
             return False
 
-    text = expr.strip()
-    return Task(prompt=f"What is {text}?", check=check, label=f"{text} = {expected}", answer=expected)
+    # One computation step per binary operator; a full solution shows this many "=".
+    steps = max(len(re.findall(r"[+\-*]", text)), 1)
+    return Task(prompt=f"What is {text}?", check=check, label=f"{text} = {expected}",
+                answer=expected, steps=steps)

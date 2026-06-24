@@ -39,19 +39,22 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 _SYSTEM = (
     "You solve arithmetic expressions. Use each number and operator exactly as given "
-    "-- never invent an operation. Compute left to right, except do any multiplication "
-    "before addition and subtraction; if there is no multiplication, just go left to "
-    "right. Put your reasoning inside <think></think>, then give ONLY the final integer "
-    "inside <answer></answer>."
+    "-- never invent an operation. Evaluate parentheses first, then multiplication, "
+    "then addition and subtraction left to right. Show each calculation explicitly as "
+    "`a op b = result`, one step at a time -- do not describe the rules in words. Put "
+    "the steps inside <think></think>, then give ONLY the final integer inside "
+    "<answer></answer>."
 )
-# Two few-shot examples: one pure add/subtract (left to right) and one with
-# multiplication (precedence). Both are needed so the model doesn't over-apply
-# "multiply first" and hallucinate a multiplication on add/subtract-only chains.
+# Few-shot examples covering the patterns (add/subtract chain, multiplication
+# precedence, parentheses, nesting). Each shows ONLY explicit calculations, no
+# prose, so the model imitates that and the thought reward (counting "=") agrees.
 _EXAMPLES = [
     ("What is 8 + 2 - 5?",
-     "<think>No multiplication, so left to right: 8 + 2 = 10, then 10 - 5 = 5.</think><answer>5</answer>"),
+     "<think>8 + 2 = 10\n10 - 5 = 5</think><answer>5</answer>"),
     ("What is 4 + 2 * 3?",
-     "<think>Multiply first: 2 * 3 = 6, then 4 + 6 = 10.</think><answer>10</answer>"),
+     "<think>2 * 3 = 6\n4 + 6 = 10</think><answer>10</answer>"),
+    ("What is 3 * (4 + 2 * (5 - 1))?",
+     "<think>5 - 1 = 4\n2 * 4 = 8\n4 + 8 = 12\n3 * 12 = 36</think><answer>36</answer>"),
 ]
 
 
@@ -104,12 +107,12 @@ class RealPolicy:
             messages, tokenize=False, add_generation_prompt=True
         )
 
-    def generate(self, prompt, num_samples, correct_answer=None):
+    def generate(self, prompt, num_samples, correct_answer=None, steps=None):
         """Sample `num_samples` completions for one prompt; return the texts.
 
         The full token sequences are cached so train_step() can reuse them. The
-        `correct_answer` argument is accepted for interface parity but ignored --
-        a real model has to produce the answer itself.
+        `correct_answer` and `steps` arguments are accepted for interface parity but
+        ignored -- a real model has to produce the answer and its working itself.
         """
         self.model.eval()
         enc = self.tokenizer(self._build_prompt(prompt), return_tensors="pt").to(self.device)

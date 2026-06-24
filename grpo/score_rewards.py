@@ -3,7 +3,7 @@
 Maps directly to research_notes.txt:
     format    -> were the <think>/<answer> tags used correctly? (penalize misuse)
     accuracy  -> is the answer correct? (the accuracy checker)
-    thought   -> how rich is the reasoning? (reinforced only when also correct)
+    thought   -> how many calculation steps ("=") are shown? (only when correct)
 """
 
 from dataclasses import dataclass
@@ -17,7 +17,6 @@ class RewardWeights:
     format: float = 1.0
     accuracy: float = 2.0
     thought: float = 1.0
-    thought_target_words: int = 12  # reasoning counts as "rich" near this length
 
 
 def max_reward(weights):
@@ -54,10 +53,14 @@ def score_output(text, task, weights):
     correct = answer is not None and task.check(answer)
     accuracy_score = 1.0 if correct else 0.0
 
-    # Thought: depth of reasoning, capped at 1.0, and gated on correctness so
-    # verbose-but-wrong reasoning earns nothing ("complex thought WITH accuracy").
-    word_count = len(think.split()) if think else 0
-    depth = min(word_count / weights.thought_target_words, 1.0)
+    # Thought: reward SHOWN computation, scaled to the problem's complexity -- count
+    # the explicit calculation steps ("=" signs, e.g. "3 * 4 = 12") and require as many
+    # as the expression has operations (task.steps). So a 4-operation nested problem
+    # needs ~4 shown steps for full credit, not just two. Capped at 1.0 and gated on
+    # correctness, so the model must actually work the whole problem, not pad with prose.
+    shown_steps = think.count("=") if think else 0
+    required_steps = max(getattr(task, "steps", 1), 1)
+    depth = min(shown_steps / required_steps, 1.0)
     thought_score = depth if correct else 0.0
 
     reward = (
