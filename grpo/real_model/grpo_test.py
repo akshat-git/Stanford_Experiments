@@ -83,7 +83,7 @@ def _print_group(task, scored, mean, std):
 
 def demo(steps=3, group_size=4):
     """Run a few real GRPO update steps over specific arithmetic tasks."""
-    policy = RealPolicy(model_name="distilgpt2")  # the real model [generate_policy]
+    policy = RealPolicy()  # the real model [generate_policy]
     weights = RewardWeights()                     # reward component weights [../score_rewards]
 
     # "Inputted tasks of a very specific nature": swap these for your own Tasks.

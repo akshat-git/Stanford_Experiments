@@ -8,6 +8,10 @@ The policy itself is a categorical distribution over four behavioural archetypes
 applies a genuine policy-gradient update to the archetype probabilities from the
 group's advantages -- so across passes the policy learns to favour the archetypes
 that score well, exactly mirroring what the real model does at the token level.
+
+Like the real model, the update is regularized with a KL penalty to a FROZEN
+reference (the initial distribution), so the policy stays close to its starting
+point and cannot collapse -- the categorical analogue of the real GRPO leash.
 """
 
 import math
@@ -33,10 +37,14 @@ class MockPolicy:
     is injected only so the simulation can synthesise a plausibly-correct output.
     """
 
-    def __init__(self, seed=0, init_weights=(0.3, 0.25, 0.25, 0.2), learning_rate=0.5):
+    def __init__(self, seed=0, init_weights=(0.3, 0.25, 0.25, 0.2),
+                 learning_rate=0.2, kl_coef=0.1):
         self._rng = random.Random(seed)
         self.logits = [math.log(w) for w in init_weights]  # learnable policy parameters
         self.lr = learning_rate
+        self.kl_coef = kl_coef
+        # Frozen reference = the initial distribution; the KL leash pulls back to it.
+        self.ref_logp = [math.log(p) for p in self._softmax()]
         self._last = None  # (archetype_indices, probs) from the most recent generate()
 
     def _softmax(self):
@@ -71,20 +79,22 @@ class MockPolicy:
         return [self._render(ARCHETYPES[i], correct_answer) for i in idxs]
 
     def train_step(self, advantages):
-        """One policy-gradient update on the archetype logits; returns the loss.
+        """One regularized policy-gradient update on the archetype logits; returns loss.
 
-        loss = -mean(advantage * log p(chosen archetype)); the gradient of log p
-        for a categorical policy is (one_hot(chosen) - p), so above-average
-        archetypes gain probability and below-average ones lose it.
+        loss = -mean(advantage * log p(chosen)) + kl_coef * KL(policy || reference)
+        The PG gradient of log p is (one_hot(chosen) - p); the KL term pulls the
+        distribution back toward the frozen initial one, so it cannot collapse.
         """
         idxs, probs = self._last
-        n = len(advantages)
+        n, k = len(advantages), len(ARCHETYPES)
 
-        loss = -sum(a * math.log(probs[i]) for a, i in zip(advantages, idxs)) / n
+        pg_loss = -sum(a * math.log(probs[i]) for a, i in zip(advantages, idxs)) / n
+        kl = sum(probs[j] * (math.log(probs[j]) - self.ref_logp[j]) for j in range(k))
+        loss = pg_loss + self.kl_coef * kl
 
-        grad = [0.0] * len(ARCHETYPES)
-        for a, i in zip(advantages, idxs):
-            for j in range(len(ARCHETYPES)):
-                grad[j] += a * ((1.0 if j == i else 0.0) - probs[j])
-        self.logits = [self.logits[j] + self.lr * grad[j] / n for j in range(len(ARCHETYPES))]
+        for j in range(k):
+            # ascend the PG objective, descend the KL penalty.
+            pg_grad = sum(a * ((1.0 if i == j else 0.0) - probs[j]) for a, i in zip(advantages, idxs)) / n
+            kl_grad = probs[j] * ((math.log(probs[j]) - self.ref_logp[j]) - kl)
+            self.logits[j] += self.lr * (pg_grad - self.kl_coef * kl_grad)
         return loss

@@ -5,9 +5,10 @@ training loss and group accuracy per pass, and saves the curves to
 performance_graphs.png in this folder.
 
 Usage:
-    python demo.py                      # default equations
-    python demo.py "7 + 5" "12 - 4"     # your own numerical equations
-    python demo.py --passes 100 "6 * 7" # more passes
+    python demo.py                          # default equations
+    python demo.py "7 + 5" "12 - 4"         # your own numerical equations
+    python demo.py --passes 100 "6 * 7"     # more passes
+    python demo.py --group 24 "6 * 7"       # more outputs sampled per task
 
 Per pass, for each task: generate a group -> score each output -> compute
 group-relative advantages -> train_step (update the policy) -> record loss/accuracy.
@@ -27,19 +28,21 @@ from show_thoughts import show_group                    # grpo/ (shared)
 from generate_policy import MockPolicy                  # local (this folder)
 
 DEFAULT_EQUATIONS = ["7 + 5", "9 - 4", "6 * 3"]
-DEFAULT_PASSES = 60
-GROUP_SIZE = 6
+DEFAULT_PASSES = 15
+GROUP_SIZE = 16  # more outputs per group -> more chances for a high-reward sample
 
 
 def parse_cli(argv):
-    """Pull `--passes N` and positional equations out of argv."""
-    passes, equations, i = DEFAULT_PASSES, [], 0
+    """Pull `--passes N`, `--group N`, and positional equations out of argv."""
+    passes, group, equations, i = DEFAULT_PASSES, GROUP_SIZE, [], 0
     while i < len(argv):
         if argv[i] == "--passes":
             passes, i = int(argv[i + 1]), i + 2
+        elif argv[i] == "--group":
+            group, i = int(argv[i + 1]), i + 2
         else:
             equations.append(argv[i]); i += 1
-    return (equations or DEFAULT_EQUATIONS), passes
+    return (equations or DEFAULT_EQUATIONS), passes, group
 
 
 def run(equations, passes, group_size=GROUP_SIZE):
@@ -49,28 +52,30 @@ def run(equations, passes, group_size=GROUP_SIZE):
     print(f"Tasks: {[t.label for t in tasks]}")
     print(f"Running {passes} GRPO passes (simulated policy)...")
 
-    losses, accuracies = [], []
+    losses, rewards, accuracies = [], [], []
     for p in range(passes):
         print(f"\n===== pass {p + 1}/{passes} =====")
-        pass_losses, pass_accs = [], []
+        pass_losses, pass_rewards, pass_accs = [], [], []
         for task in tasks:
-            # generate -> score -> advantages -> update, recording loss + accuracy.
+            # generate -> score -> advantages -> update, recording loss/reward/accuracy.
             outputs = policy.generate(task.prompt, group_size, correct_answer=task.answer)
             scored = [score_output(text, task, weights) for text in outputs]
             compute_group_advantages(scored)
             show_group(task, scored)  # show each output's thinking + prediction
             pass_losses.append(policy.train_step([s.advantage for s in scored]))
+            pass_rewards.append(sum(s.reward for s in scored) / len(scored))
             pass_accs.append(sum(s.correct for s in scored) / len(scored))
 
         losses.append(sum(pass_losses) / len(pass_losses))
+        rewards.append(sum(pass_rewards) / len(pass_rewards))
         accuracies.append(sum(pass_accs) / len(pass_accs))
-        print(f"  pass loss: {losses[-1]:.4f}   pass accuracy: {accuracies[-1]:.3f}")
+        print(f"  pass loss: {losses[-1]:.4f}   reward: {rewards[-1]:.3f}   accuracy: {accuracies[-1]:.3f}")
 
     out_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "performance_graphs.png")
-    plot_performance(losses, accuracies, out_path, title="GRPO (simulated policy) performance")
-    return losses, accuracies
+    plot_performance(losses, rewards, accuracies, out_path, title="GRPO (simulated policy) performance")
+    return losses, rewards, accuracies
 
 
 if __name__ == "__main__":
-    equations, passes = parse_cli(sys.argv[1:])
-    run(equations, passes)
+    equations, passes, group = parse_cli(sys.argv[1:])
+    run(equations, passes, group)
