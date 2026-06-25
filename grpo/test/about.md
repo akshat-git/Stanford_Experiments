@@ -48,10 +48,10 @@ parse_tags.py  define_tasks.py  compute_advantages.py   (concept leaves)
 
 | File | Key symbol | Notes |
 |------|-----------|-------|
-| `generate_policy.py` | `MockPolicy` | A *learnable* categorical policy over 4 archetypes — *competent / lazy / incorrect / malformed*. `generate()` samples them; `train_step(advantages)` applies a categorical policy-gradient update **plus a KL penalty to the frozen initial distribution**, so it improves across passes without collapsing — mirroring the real model's GRPO leash at the archetype level. |
+| `generate_policy.py` | `MockPolicy` | A *learnable* categorical policy over 4 archetypes — *competent / lazy / incorrect / malformed*. `generate()` samples them; `eval_generate()` is the read-only generalization probe (RNG snapshot/restored, no learning-state change); `train_step(advantages)` applies a categorical policy-gradient update **plus a KL penalty to the frozen initial distribution**, so it improves across passes without collapsing — mirroring the real model's GRPO leash at the archetype level. |
 | `grpo_test.py` | `run_grpo_on_task()`, `demo()` | Minimal single-pass entry point: generate → score → normalize → report. Standard library only. |
-| `demo.py` | `run()`, `parse_cli()` | Clean multi-pass demo. Reads `config.py`, runs many GRPO passes, writes per-pass thoughts/predictions to `run_log.txt` (terminal shows only loss/reward/accuracy), prints a final per-task mode-of-answers summary, and saves `performance_graphs.png`. CLI equations are **added** to config's set; `--passes`/`--group` override. Needs matplotlib. |
-| `config.py` | `EQUATIONS`, `PASSES`, `GROUP_SIZE`, `SEED`, `LEARNING_RATE`, `KL_COEF`, `INIT_WEIGHTS` | **The single editable surface** — tasks + hyperparameters. `PASSES` is double the real folder's (this demo is instant). |
+| `demo.py` | `run()`, `evaluate_generalization()`, `parse_cli()` | Clean multi-pass demo. Reads `config.py`, runs many GRPO passes, writes per-pass thoughts/predictions to `run_log.txt` (terminal shows only loss/reward/accuracy), prints a final per-task mode-of-answers summary, and saves `performance_graphs.png`. Every `EVAL_EVERY` passes it runs a read-only **generalization probe** on the held-out `TEST_EQUATIONS` and overlays each held-out curve (dashed) on the accuracy panel. CLI equations are **added** to config's set; `--passes`/`--group` override. Needs matplotlib. |
+| `config.py` | `EQUATIONS`, `TEST_EQUATIONS`, `EVAL_EVERY`, `PASSES`, `GROUP_SIZE`, `SEED`, `LEARNING_RATE`, `KL_COEF`, `INIT_WEIGHTS` | **The single editable surface** — tasks + hyperparameters. `TEST_EQUATIONS` are held-out (never trained on) and probed every `EVAL_EVERY` passes. `PASSES` is double the real folder's (this demo is instant). |
 
 ## Usage
 

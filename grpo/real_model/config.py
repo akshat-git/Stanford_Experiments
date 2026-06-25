@@ -16,6 +16,20 @@ EQUATIONS = [
     "(6 + 4) * 3 // 4 + 2 ** 2",        # = 11  (floor division + power)
 ]
 
+# --- Generalization probe ------------------------------------------------- #
+# Held-out expressions the policy is NEVER trained on. Every EVAL_EVERY passes
+# the current policy is evaluated on these (read-only -- no weight update) and
+# their accuracy is overlaid on the training-accuracy panel, so you can see
+# whether what the policy learned generalizes.
+TEST_EQUATIONS = [
+    "3 * 4 + 2 ** 3 - 5",         # = 15
+    "(20 - 6) // 3 + 2 * 4",      # = 12
+    "50 % 9 + 3 ** 2 * 2",        # = 23
+    "(8 + 4) / 3 * 2 + 1",        # = 9   (division)
+    "2 ** 4 - 10 % 4 + 3",        # = 17
+]
+EVAL_EVERY = 3       # run the generalization probe after every N training passes
+
 # --- Training loop -------------------------------------------------------- #
 PASSES = 15          # number of GRPO passes over the task set
 GROUP_SIZE = 12      # completions sampled per task per pass (drives most of the compute)

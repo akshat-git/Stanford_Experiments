@@ -146,6 +146,20 @@ class RealPolicy:
         return [self.tokenizer.decode(seq[prompt_len:], skip_special_tokens=True)
                 for seq in sequences]
 
+    def eval_generate(self, prompt, num_samples, correct_answer=None, steps=None):
+        """Read-only generalization probe: sample completions WITHOUT perturbing training.
+
+        The counterpart of MockPolicy.eval_generate. generate() overwrites the
+        token cache that train_step() consumes, so here we snapshot and restore it
+        around the draw -- probing held-out tasks never disturbs the cached group
+        from the last training generate(), so the training trajectory is unchanged.
+        """
+        saved_cache = self._cache
+        try:
+            return self.generate(prompt, num_samples, correct_answer, steps)
+        finally:
+            self._cache = saved_cache
+
     def _autocast(self):
         """bf16 autocast context when supported, else a no-op."""
         return torch.autocast(self.device.type, dtype=self.amp_dtype) if self.use_amp else nullcontext()
