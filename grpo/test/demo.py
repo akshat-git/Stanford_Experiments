@@ -46,9 +46,26 @@ def parse_cli(argv):
     return config.EQUATIONS + extra, passes, group
 
 
+def evaluate_generalization(policy, test_tasks, group_size, weights):
+    """Read-only probe: accuracy of the CURRENT policy on each held-out task.
+
+    Uses `policy.eval_generate` (RNG snapshot/restored, no `train_step`), so the
+    policy is never trained on these tasks and the training trajectory is
+    unperturbed. Returns one accuracy per held-out task, aligned to `test_tasks`.
+    """
+    accs = []
+    for task in test_tasks:
+        outputs = policy.eval_generate(task.prompt, group_size, correct_answer=task.answer, steps=task.steps)
+        scored = [score_output(text, task, weights) for text in outputs]
+        accs.append(sum(s.correct for s in scored) / len(scored))
+    return accs
+
+
 def run(equations, passes, group_size=None):
     group_size = group_size or config.GROUP_SIZE
     tasks = [equation_task(e) for e in equations]
+    test_tasks = [equation_task(e) for e in config.TEST_EQUATIONS]
+    eval_every = config.EVAL_EVERY
     policy = MockPolicy(
         seed=config.SEED, init_weights=config.INIT_WEIGHTS,
         learning_rate=config.LEARNING_RATE, kl_coef=config.KL_COEF,
@@ -57,9 +74,12 @@ def run(equations, passes, group_size=None):
     folder = os.path.dirname(os.path.abspath(__file__))
     log_path = os.path.join(folder, "run_log.txt")
     print(f"Tasks: {[t.label for t in tasks]}")
+    print(f"Held-out (generalization) tasks: {[t.label for t in test_tasks]}")
     print(f"Running {passes} GRPO passes (simulated policy); per-output thoughts -> {log_path}")
 
     losses, rewards, accuracies = [], [], []
+    # Generalization probe: pass numbers sampled, and one accuracy curve per held-out task.
+    gen_passes, gen_curves = [], [[] for _ in test_tasks]
     final_answers = [[] for _ in tasks]  # last pass's parsed answers, per task
     with open(log_path, "w", encoding="utf-8") as log:
         for p in range(passes):
@@ -83,11 +103,22 @@ def run(equations, passes, group_size=None):
             # terminal: just the metrics.
             print(f"pass {p + 1:>3}/{passes}   loss {losses[-1]:.4f}   reward {rewards[-1]:.3f}   accuracy {accuracies[-1]:.3f}")
 
+            # Every `eval_every` passes, probe generalization on the held-out tasks.
+            if test_tasks and (p + 1) % eval_every == 0:
+                gen_accs = evaluate_generalization(policy, test_tasks, group_size, weights)
+                gen_passes.append(p + 1)
+                for ti, a in enumerate(gen_accs):
+                    gen_curves[ti].append(a)
+                mean_gen = sum(gen_accs) / len(gen_accs)
+                print(f"  [generalization @ pass {p + 1}] held-out accuracy {mean_gen:.3f}  ({len(test_tasks)} expressions)")
+                print(f"  [generalization @ pass {p + 1}] mean held-out accuracy {mean_gen:.3f}", file=log)
+
     report_final_modes(tasks, final_answers)
 
     out_path = os.path.join(folder, "performance_graphs.png")
     plot_performance(losses, rewards, accuracies, out_path,
-                     title="GRPO (simulated policy) performance", max_reward=max_reward(weights))
+                     title="GRPO (simulated policy) performance", max_reward=max_reward(weights),
+                     gen_passes=gen_passes, gen_curves=gen_curves, gen_labels=config.TEST_EQUATIONS)
     return losses, rewards, accuracies
 
 

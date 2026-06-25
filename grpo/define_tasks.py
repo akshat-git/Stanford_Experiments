@@ -5,17 +5,38 @@ answer string is correct. Because correctness lives on the task, you can plug in
 ANY specific verifiable task type (arithmetic, "is it prime?", string puzzles)
 without touching the GRPO machinery.
 
-`equation_task("2 * (3 + 4)")` parses a user-supplied numerical expression into a
-Task. Expressions may chain several operators and use parentheses, so they take a
-varying number of reasoning steps (and follow standard operator precedence).
+`equation_task("(12 / 4 + 3) ** 2 - 5")` parses any standard arithmetic expression
+into a Task. There is no operator allow-list -- it accepts `+ - * / // % **` and
+parentheses (arbitrary nesting) -- but it is evaluated with a SAFE AST walker, not
+`eval`, so only arithmetic runs (no names, calls, or attribute access). The result
+must be an integer so the deterministic checker can compare exactly.
 """
 
-import re
+import ast
+import operator
 from dataclasses import dataclass
 from typing import Callable
 
-# Allowed characters: integers, spaces, the operators + - *, and parentheses.
-_ALLOWED_RE = re.compile(r"^[0-9+\-*()\s]+$")
+# The only AST node operators we evaluate -- everything else is rejected.
+_BINOPS = {
+    ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul,
+    ast.Div: operator.truediv, ast.FloorDiv: operator.floordiv,
+    ast.Mod: operator.mod, ast.Pow: operator.pow,
+}
+_UNARYOPS = {ast.UAdd: operator.pos, ast.USub: operator.neg}
+
+
+def _eval_node(node):
+    """Recursively evaluate a whitelisted arithmetic AST node (safe; no code exec)."""
+    if isinstance(node, ast.Expression):
+        return _eval_node(node.body)
+    if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+        return node.value
+    if isinstance(node, ast.BinOp) and type(node.op) in _BINOPS:
+        return _BINOPS[type(node.op)](_eval_node(node.left), _eval_node(node.right))
+    if isinstance(node, ast.UnaryOp) and type(node.op) in _UNARYOPS:
+        return _UNARYOPS[type(node.op)](_eval_node(node.operand))
+    raise ValueError("unsupported expression element")
 
 
 @dataclass
@@ -43,31 +64,30 @@ def arithmetic_task(a, b, op="+"):
 
 
 def equation_task(expr):
-    """Parse a numerical expression into a (possibly multi-step) Task.
+    """Parse any standard arithmetic expression into a (multi-step) Task.
 
-    Supports chained `+ - *` and parentheses with standard precedence, e.g.
-    "2 + 3 * 4", "8 - 2 + 5 - 1", or "2 * (3 + 4)". Only integers and `+ - * ( )`
-    are accepted.
+    Accepts `+ - * / // % **` and parentheses with standard precedence, e.g.
+    "2 + 3 * 4", "3 * (4 + 2 * (5 - 1))", or "(12 / 4 + 3) ** 2 - 5". Evaluated with
+    a safe AST walker (no `eval`), and required to be an integer.
     """
     text = expr.strip()
-    if not text or not _ALLOWED_RE.match(text) or "**" in text.replace(" ", ""):
-        raise ValueError(f"Could not parse expression {expr!r}; use integers, + - *, and ().")
-
-    # Safe: only integers, spaces, + - *, and parentheses can reach eval.
     try:
-        expected = eval(text, {"__builtins__": {}}, {})
-    except SyntaxError:
-        raise ValueError(f"Invalid expression {expr!r}.")
-    if not isinstance(expected, int):
-        raise ValueError(f"Expression {expr!r} must evaluate to an integer.")
+        tree = ast.parse(text, mode="eval")
+        value = _eval_node(tree)
+    except (SyntaxError, ValueError, TypeError, ZeroDivisionError):
+        raise ValueError(f"Could not parse arithmetic expression {expr!r}.")
+
+    if isinstance(value, float):
+        if value.is_integer():
+            value = int(value)
 
     def check(answer_text):
         try:
-            return int(answer_text.strip()) == expected
+            return int(answer_text.strip()) == value
         except (ValueError, AttributeError):
             return False
 
     # One computation step per binary operator; a full solution shows this many "=".
-    steps = max(len(re.findall(r"[+\-*]", text)), 1)
-    return Task(prompt=f"What is {text}?", check=check, label=f"{text} = {expected}",
-                answer=expected, steps=steps)
+    steps = max(sum(isinstance(n, ast.BinOp) for n in ast.walk(tree)), 1)
+    return Task(prompt=f"What is {text}?", check=check, label=f"{text} = {value}",
+                answer=value, steps=steps)

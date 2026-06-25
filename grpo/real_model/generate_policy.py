@@ -38,21 +38,21 @@ import torch.nn.functional as F
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 _SYSTEM = (
-    "You solve arithmetic expressions. Use each number and operator exactly as given "
-    "-- never invent an operation. Evaluate parentheses first, then multiplication, "
-    "then addition and subtraction left to right. Show each calculation explicitly as "
-    "`a op b = result`, one step at a time -- do not describe the rules in words. Put "
-    "the steps inside <think></think>, then give ONLY the final integer inside "
-    "<answer></answer>."
+    "You solve arithmetic expressions (operators + - * / // % ** and parentheses). "
+    "Use each number and operator exactly as given -- never invent an operation. "
+    "Evaluate parentheses first, then powers (**), then * / // %, then + and - left "
+    "to right. Show each calculation explicitly as `a op b = result`, one step at a "
+    "time -- do not describe the rules in words. Put the steps inside <think></think>, "
+    "then give ONLY the final integer inside <answer></answer>."
 )
-# Few-shot examples covering the patterns (add/subtract chain, multiplication
-# precedence, parentheses, nesting). Each shows ONLY explicit calculations, no
-# prose, so the model imitates that and the thought reward (counting "=") agrees.
+# Few-shot examples covering the patterns (add/subtract chain; powers + division;
+# nested parentheses). Each shows ONLY explicit calculations, no prose, so the model
+# imitates that and the thought reward (counting "=") agrees.
 _EXAMPLES = [
     ("What is 8 + 2 - 5?",
      "<think>8 + 2 = 10\n10 - 5 = 5</think><answer>5</answer>"),
-    ("What is 4 + 2 * 3?",
-     "<think>2 * 3 = 6\n4 + 6 = 10</think><answer>10</answer>"),
+    ("What is 2 ** 3 + 12 / 4?",
+     "<think>2 ** 3 = 8\n12 / 4 = 3\n8 + 3 = 11</think><answer>11</answer>"),
     ("What is 3 * (4 + 2 * (5 - 1))?",
      "<think>5 - 1 = 4\n2 * 4 = 8\n4 + 8 = 12\n3 * 12 = 36</think><answer>36</answer>"),
 ]

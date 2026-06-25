@@ -16,11 +16,17 @@ Three panels, because the policy-gradient "loss" alone is a poor progress signal
 
 
 def plot_performance(losses, rewards, accuracies, out_path, title="GRPO performance",
-                     max_reward=None):
+                     max_reward=None, gen_passes=None, gen_curves=None, gen_labels=None):
     """Save a three-panel figure (loss, mean reward, accuracy) vs pass.
 
     `max_reward` (if given) is drawn as a ceiling line on the reward panel so the
     actual reward points can be read against the best the reward system allows.
+
+    Generalization probe (optional): `gen_passes` are the pass numbers at which
+    held-out expressions were evaluated, `gen_curves` is one accuracy list per
+    held-out expression (each aligned to `gen_passes`), and `gen_labels` names
+    them. When given, each held-out curve is overlaid on the accuracy panel
+    (dashed) so generalization can be read against the training accuracy.
     """
     import matplotlib
     matplotlib.use("Agg")
@@ -46,10 +52,20 @@ def plot_performance(losses, rewards, accuracies, out_path, title="GRPO performa
     ax_reward.legend(loc="lower right")
     ax_reward.grid(True, alpha=0.3)
 
-    # Accuracy as a percentage.
+    # Accuracy as a percentage: training (solid) + held-out generalization (dashed).
     acc_pct = [a * 100 for a in accuracies]
-    ax_acc.plot(passes, acc_pct, marker="o", color="tab:blue")
-    ax_acc.set_title("Group accuracy per pass")
+    ax_acc.plot(passes, acc_pct, marker="o", color="tab:blue", label="training (mean)")
+    if gen_passes and gen_curves:
+        cmap = plt.get_cmap("autumn")
+        labels = gen_labels or [f"held-out {i + 1}" for i in range(len(gen_curves))]
+        for i, curve in enumerate(gen_curves):
+            color = cmap(i / max(len(gen_curves) - 1, 1))
+            ax_acc.plot(gen_passes, [a * 100 for a in curve], marker="s", linestyle="--",
+                        color=color, alpha=0.9, label=labels[i])
+        ax_acc.set_title(f"Accuracy per pass\n(training vs {len(gen_curves)} held-out expressions)")
+        ax_acc.legend(loc="lower right", fontsize=7)
+    else:
+        ax_acc.set_title("Group accuracy per pass")
     ax_acc.set_xlabel("pass"); ax_acc.set_ylabel("accuracy (%)")
     ax_acc.set_ylim(-2, 105)
     ax_acc.grid(True, alpha=0.3)

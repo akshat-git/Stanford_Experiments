@@ -7,12 +7,13 @@ demo.py reads them (nothing else needs editing).
 # --- Tasks ---------------------------------------------------------------- #
 # Numerical expressions to train on. Multi-step is fine (chained + - *, standard
 # precedence), e.g. "2 + 3 * 4". One Task is built per expression.
-# A hard gradient: precedence + long chain, two parenthesised groups, and nested parentheses.
+# Complex multi-step expressions exercising the full operator set: powers (**),
+# division (/), modulo (%), and floor division (//), with parentheses.
 EQUATIONS = [
-    "12 + 3 * 4 - 5",            # = 19
-    "2 * (3 + 4) - 6",          # = 8
-    "(8 - 3) * (2 + 1) + 4",    # = 19
-    "3 * (4 + 2 * (5 - 1))",    # = 36  (nested parentheses)
+    "2 ** 5 - 3 * (4 + 1)",             # = 17  (power)
+    "(12 / 4 + 3) * 2 - 5",             # = 7   (division)
+    "100 % 7 + 2 ** 3 * (5 - 2)",       # = 26  (modulo + power)
+    "(6 + 4) * 3 // 4 + 2 ** 2",        # = 11  (floor division + power)
 ]
 
 # --- Training loop -------------------------------------------------------- #

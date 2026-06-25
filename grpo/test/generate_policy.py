@@ -79,6 +79,20 @@ class MockPolicy:
         self._last = (idxs, probs)
         return [self._render(ARCHETYPES[i], correct_answer, steps) for i in idxs]
 
+    def eval_generate(self, prompt, num_samples, correct_answer=0, steps=1):
+        """Read-only generalization probe: sample outputs WITHOUT perturbing training.
+
+        Snapshots and restores the RNG (and `_last`) around the draw, so calling
+        this on held-out tasks never advances the policy's random stream or learning
+        state -- the training trajectory is identical whether or not we probe.
+        """
+        rng_state, last = self._rng.getstate(), self._last
+        try:
+            return self.generate(prompt, num_samples, correct_answer, steps)
+        finally:
+            self._rng.setstate(rng_state)
+            self._last = last
+
     def train_step(self, advantages):
         """One regularized policy-gradient update on the archetype logits; returns loss.
 

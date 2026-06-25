@@ -46,7 +46,7 @@ An intuitive implementation of Group Relative Policy Optimization (force `<think
 - `research_notes.txt` is the plain-language description of the GRPO concept the code implements.
 
 - `parse_tags.py` pulls the `<think>`/`<answer>` contents out of a model output (`parse_output`).
-- `define_tasks.py` defines a `Task` (prompt + answer checker + label + answer) plus `arithmetic_task` and `equation_task` (parses a command-line expression with `+ - *` and parentheses incl. nesting, e.g. `"3 * (4 + 2 * (5 - 1))"`, standard precedence).
+- `define_tasks.py` defines a `Task` (prompt + answer checker + label + answer + step count) plus `arithmetic_task` and `equation_task`, which accepts any standard arithmetic expression (`+ - * / // % **`, nested parentheses, e.g. `"(12 / 4 + 3) ** 2 - 5"`) via a safe AST walker (no `eval` / code execution) and requires an integer result.
 - `score_rewards.py` scores one output on format + accuracy + thought (`score_output`, `RewardWeights`); thought rewards the number of shown `=` calculation steps (only when correct), so the model shows its working rather than padding with prose.
 - `compute_advantages.py` performs the core GRPO step, turning rewards into group-relative advantages (`compute_group_advantages`); zeros them for a group with no correct output so GRPO can't converge onto a wrong answer.
 - `plot_performance.py` saves loss + reward + accuracy curves to `performance_graphs.png` (`plot_performance`, used by both demos). Loss is the regularized GRPO surrogate (PG term + KL, settles near the KL floor); mean reward is the actual progress signal, drawn against the max-possible-reward ceiling line (`score_rewards.max_reward`); accuracy is shown as a percentage.
